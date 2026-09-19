@@ -17,14 +17,15 @@ def get_applications(db = Depends(get_db), user_id: int = Depends(get_current_us
     return applications
 
 @router.post("/applications", response_model=ApplicationResponse)
-def create_application(application: ApplicationCreate, db = Depends(get_db), user_id: int = Depends(get_current_user_id)):
+def create_application(application: ApplicationCreate, db=Depends(get_db), user_id: int = Depends(get_current_user_id)):
     new_application = Application(
         company=application.company,
         position=application.position,
         status=application.status,
         date_applied=application.date_applied,
         interview_date=application.interview_date,
-        notes=application.notes
+        notes=application.notes,
+        user_id=user_id
     )
 
     db.add(new_application)
